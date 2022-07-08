@@ -2,7 +2,6 @@
 # This file tags and uploads an image to Docker Hub
 
 # Assumes that an image is built via `run_docker.sh`
-# Capstone
 
 # Step 1:
 # Create dockerpath

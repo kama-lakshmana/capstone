@@ -1,6 +1,5 @@
 FROM python:3.7.3-stretch
 
-# Capstone
 ## Step 1:
 # Create a working directory
 WORKDIR /app
@@ -16,8 +15,8 @@ RUN pip install --no-cache-dir --upgrade pip &&\
     pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
 
 ## Step 4:
-# Expose port 80
-EXPOSE 80
+# Expose port 5000
+EXPOSE 5000
 
 ## Step 5:
 # Run app.py at container launch

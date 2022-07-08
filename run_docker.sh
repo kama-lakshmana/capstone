@@ -2,8 +2,6 @@
 
 ## Complete the following steps to get Docker running locally
 
-# Capstone
-
 # Step 1:
 # Build image and add a descriptive tag
 docker build . --tag capstone
