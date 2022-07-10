@@ -47,10 +47,13 @@ jobs:
             - image: cimg/base:2022.06
         steps:
             - checkout
+            
+            - setup_remote_docker:
+                version: 20.10.14
+            
             - run:
                 name: build image
                 command: |
-                    sudo apt-get update && sudo apt-get install -y docker
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
