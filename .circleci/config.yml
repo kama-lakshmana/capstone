@@ -44,7 +44,7 @@ jobs:
     build_docker_image:
         docker:
             # Use the same Docker base as the project
-            - image: python:3.7.3-stretch
+            - image: amazon/aws-cli
 
         steps:
             - checkout
@@ -52,7 +52,7 @@ jobs:
                 name: build image
                 command: |
                     #install docker
-                    sudo apt-get install docker.io
+                    yum -y install docker.io
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
