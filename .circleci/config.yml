@@ -52,14 +52,23 @@ jobs:
                 version: 20.10.14
             
             - run:
-                name: build image
+                name: Build and run docker image
                 command: |
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
                     docker images capstone
                     #run the docker
-                    docker run -p 80:5000 capstone 
+                    docker run -p 80:5000 capstone
+
+            - run:
+                name: Push docker image to Hub
+                command: |        
+                    #set path 
+                    dockerpath=kamalakshmana/capstone
+                    docker login --username=kamalakshmana
+                    docker tag capstone $dockerpath
+                    docker push $dockerpath
 
 workflows:
     default:
