@@ -52,6 +52,7 @@ jobs:
                 name: build image
                 command: |
                     sudo systemctl enable docker.service
+                    chown $USER /var/run/docker.sock
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
