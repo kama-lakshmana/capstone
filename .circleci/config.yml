@@ -90,20 +90,23 @@ jobs:
                     # apt-get -y install sudo
                     # # extras for below installs
                     # sudo apt-get -y install curl gnupg2 software-properties-common unzip less git dos2unix
-                    # # install AWS CLI at latest version
-                    # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                    # unzip awscliv2.zip
-                    # sudo ./aws/install
                     
                     sudo apt-get update && sudo apt-get upgrade
 
+                    # install AWS CLI at latest version
+                    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                    unzip awscliv2.zip
+                    sudo ./aws/install
+                    
                     # Install kubectl
                     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
                     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+                    ls -l /usr/local/bin/kubectl
                     
                     # Install eksctl
                     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
                     sudo mv /tmp/eksctl /usr/local/bin
+                    ls -l /usr/local/bin/eksctl
             # - run:
             #     name: Build AWS Kubernetes cluster
             #     command: |
