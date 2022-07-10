@@ -47,10 +47,14 @@ jobs:
             - image: cimg/base:2022.06
         steps:
             - checkout
-            - run: sudo apt-get update
+            - run: 
+                name: update and install
+                command: |
+                    sudo apt-get update && sudo apt-get install -y docker
             - run:
                 name: build image
                 command: |
+                    service docker restart
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
