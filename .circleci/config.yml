@@ -52,7 +52,7 @@ jobs:
                 name: build image
                 command: |
                     #install docker
-                    yum -y install docker.io
+                    yum -y install docker
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
