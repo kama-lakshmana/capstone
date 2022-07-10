@@ -69,14 +69,70 @@ jobs:
                 command: |        
                     #set path 
                     dockerpath=kamalakshmana/capstone
+                    #login to docker hub
                     echo $DOCKER_PASS | docker login -u $DOCKER_USERNAME --password-stdin
-                    #docker login --username=kamalakshmana
+                    #tag the image
                     docker tag capstone $dockerpath
+                    #push the image to hub
                     docker push $dockerpath
+
+    Deploy_AWS_Kube:
+        docker:
+            - image: cimg/base:2022.06
+        working_directory: ~/repo
+        steps:
+            - checkout
+            - run:
+                name: Install Dependencies for Kube configuration
+                command: |
+                    # # install sudo package 
+                    # apt-get -y -qq update
+                    # apt-get -y install sudo
+                    # # extras for below installs
+                    # sudo apt-get -y install curl gnupg2 software-properties-common unzip less git dos2unix
+                    # # install AWS CLI at latest version
+                    # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                    # unzip awscliv2.zip
+                    # sudo ./aws/install
+                    
+                    sudo apt-get update && sudo apt-get upgrade
+
+                    # Install kubectl
+                    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+                    
+                    # Install eksctl
+                    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                    sudo mv /tmp/eksctl /usr/local/bin
+            # - run:
+            #     name: Build AWS Kubernetes cluster
+            #     command: |
+            #         export TERM=xterm
+            #         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            #         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            #         aws configure set default.region $AWS_DEFAULT_REGION
+            #         nohup aws cloudformation list-exports > output.txt
+            #         chmod 755 aws_kubernetes_infra.sh
+            #         ./aws_kubernetes_infra.sh
+            
+            # - run:
+            #     name: update kube cluster
+            #     command: |
+            #         # # update cluster with yaml - Rolling Deployment
+            #         aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name capstone-amazinggames
+            #         kubectl apply -f capstone_deploy.yml
+            #         kubectl get nodes
+            #         kubectl get deployment
+            #         kubectl get pod -o wide
+            #         kubectl apply -f services.yml
+            #         kubectl get services
+            #         kubectl rollout restart deployment/capstone-amazinggames
+            #         kubectl describe svc capstone-amazinggames
 
 workflows:
     default:
         jobs:
-            - build
-            - build_docker_image:
-                requires: [ build ]
+            #- build
+            #- build_docker_image:
+                #requires: [ build ]
+            - Deploy_AWS_Kube
