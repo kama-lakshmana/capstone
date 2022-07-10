@@ -44,10 +44,10 @@ jobs:
     build_docker_image:
         docker:
             # Use the same Docker base as the project
-            - image: cimg/base:latest
-
+            - image: cimg/base
         steps:
             - checkout
+            - run: sudo apt-get update
             - run:
                 name: build image
                 command: |
