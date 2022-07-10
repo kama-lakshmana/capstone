@@ -57,3 +57,9 @@ jobs:
                     docker images capstone
                     #run the docker
                     docker run -p 80:5000 capstone 
+
+workflows:
+    default:
+        jobs:
+            - build
+            - build_docker_image
