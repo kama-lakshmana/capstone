@@ -51,6 +51,8 @@ jobs:
             - run:
                 name: build image
                 command: |
+                    #install docker
+                    sudo apt-get install docker.io
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
@@ -62,4 +64,5 @@ workflows:
     default:
         jobs:
             - build
-            - build_docker_image
+            - build_docker_image:
+                requires: [ build ]
