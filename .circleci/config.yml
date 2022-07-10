@@ -51,8 +51,7 @@ jobs:
             - run:
                 name: build image
                 command: |
-                    ls -l /var/run/docker.sock
-                    #sudo chown ${USER} /var/run/docker.sock
+                    sudo chown "$USER" /var/run/docker.sock
                     sudo systemctl restart docker
                     #build docker image
                     docker build . --tag capstone
