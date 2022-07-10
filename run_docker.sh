@@ -11,5 +11,5 @@ docker build . --tag capstone
 docker images capstone
 
 # Step 3: 
-# Run tensorflow app
+# Run app
 docker run -p 80:5000 capstone
