@@ -45,6 +45,9 @@ jobs:
         docker:
             # Use the same Docker base as the project
             - image: cimg/base:2022.06
+                auth:
+                    username: $DOCKER_USERNAME
+                    password: $DOCKER_PASS
         steps:
             - checkout
             
@@ -66,7 +69,8 @@ jobs:
                 command: |        
                     #set path 
                     dockerpath=kamalakshmana/capstone
-                    docker login --username=kamalakshmana
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USERNAME --password-stdin
+                    #docker login --username=kamalakshmana
                     docker tag capstone $dockerpath
                     docker push $dockerpath
 
