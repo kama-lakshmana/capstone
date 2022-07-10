@@ -51,6 +51,7 @@ jobs:
             - run:
                 name: build image
                 command: |
+                    sudo systemctl enable docker.service
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
