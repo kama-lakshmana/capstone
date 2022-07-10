@@ -44,15 +44,13 @@ jobs:
     build_docker_image:
         docker:
             # Use the same Docker base as the project
-            - image: amazon/aws-cli
+            - image: cimg/base:latest
 
         steps:
             - checkout
             - run:
                 name: build image
                 command: |
-                    #install docker
-                    yum -y install docker
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
@@ -63,6 +61,6 @@ jobs:
 workflows:
     default:
         jobs:
-            - build
-            - build_docker_image:
-                requires: [ build ]
+            #- build
+            - build_docker_image
+                #requires: [ build ]
