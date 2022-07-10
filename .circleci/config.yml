@@ -51,8 +51,6 @@ jobs:
             - run:
                 name: build image
                 command: |
-                    #sudo chown "$USER" /var/run/docker.sock
-                    sudo systemctl restart docker
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
@@ -63,6 +61,6 @@ jobs:
 workflows:
     default:
         jobs:
-            #- build
+            - build
             - build_docker_image
-                #requires: [ build ]
+                requires: [ build ]
