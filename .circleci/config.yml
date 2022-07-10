@@ -62,5 +62,5 @@ workflows:
     default:
         jobs:
             - build
-            - build_docker_image
+            - build_docker_image:
                 requires: [ build ]
