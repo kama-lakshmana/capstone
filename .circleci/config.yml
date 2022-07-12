@@ -60,7 +60,6 @@ jobs:
                     docker images capstone
                     #run the container
                     docker run -p 80:5000 capstone
-                    docker ps
             - run:
                 name: Push docker image to Hub
                 command: |        
@@ -109,28 +108,16 @@ jobs:
                     chmod 755 aws_kube_infra.sh
                     ./aws_kube_infra.sh
             
-            # - run:
-            #     name: update kube cluster
-            #     command: |
-            #         # # update cluster with yaml - Rolling Deployment
-            #         aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name capstone-amazinggames
-            #         kubectl apply -f capstone_deploy.yml
-            #         kubectl get nodes
-            #         kubectl get deployment
-            #         kubectl get pod -o wide
-            #         kubectl apply -f services.yml
-            #         kubectl get services
-            #         kubectl rollout restart deployment/capstone-amazinggames
-            #         kubectl describe svc capstone-amazinggames
-            # Assuming the Kubernetes cluster is ready
-            # kubectl get nodes
-            # # Deploy an App from the Dockerhub to the Kubernetes Cluster
-            # kubectl create deploy python-helloworld --image=sudkul/python-helloworld:v1.0.0
-            # # See the status
-            # kubectl get deploy,rs,svc,pods
-            # # Port forward 
-            # kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 5000:5000
-
+            - run:
+                name: Deploy onto kube cluster
+                command: |
+                    kubectl get nodes
+                    # Deploy an App from the Dockerhub to the Kubernetes Cluster
+                    kubectl create deploy capstone --image=kamalakshmana/capstone:latest
+                    # See the status
+                    kubectl get deploy,rs,svc,pods
+                    # Port forward 
+                    #kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 5000:5000
 
 workflows:
     default:
@@ -138,4 +125,4 @@ workflows:
             - build
             - build_docker_image:
                 requires: [ build ]
-            #- Deploy_AWS_Kube
+            - Deploy_AWS_Kube
