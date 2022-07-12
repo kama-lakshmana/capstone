@@ -110,15 +110,14 @@ jobs:
                     nohup aws cloudformation list-exports > output.txt
                     chmod 755 aws_kube_infra.sh
                     ./aws_kube_infra.sh
-            
             - run:
                 name: Deploy onto Kube cluster
                 command: |
-                    kubectl get nodes
+                    kubectl --kubeconfig /home/circleci/.kube/config get nodes
                     # Deploy an App from the Dockerhub to the Kubernetes Cluster
                     kubectl create deploy capstone --image=kamalakshmana/capstone:latest
                     # See the status
-                    kubectl get deploy,rs,svc,pods
+                    kubectl --kubeconfig /home/circleci/.kube/config get deploy,rs,svc,pods
 
 workflows:
     default:
