@@ -5,7 +5,7 @@
 version: 2.1
 
 jobs:
-    build:
+    Build:
         docker:
          # Use the same Docker base as the project
             - image: python:3.7.3-stretch
@@ -38,7 +38,7 @@ jobs:
                     . capstone/bin/activate
                     make lint
 
-    build_docker_image:
+    Build_Docker_Image:
         docker:
             # Use the same Docker base as the project
             - image: cimg/base:2022.06
@@ -109,15 +109,13 @@ jobs:
                     ./aws_kube_infra.sh
             
             - run:
-                name: Deploy onto kube cluster
+                name: Deploy onto Kube cluster
                 command: |
                     kubectl get nodes
                     # Deploy an App from the Dockerhub to the Kubernetes Cluster
                     kubectl create deploy capstone --image=kamalakshmana/capstone:latest
                     # See the status
                     kubectl get deploy,rs,svc,pods
-                    # Port forward 
-                    #kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 5000:5000
 
 workflows:
     default:
