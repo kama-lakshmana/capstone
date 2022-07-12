@@ -124,9 +124,7 @@ workflows:
     default:
         jobs:
             - Build
-            # - Build_Docker_Image:
-            #     requires: [ build ]
-            # - Deploy_AWS_Kube:
-            #     requires: [ build_docker_image ]
-            - docker/publish:
-                image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+            - Build_Docker_Image:
+                requires: [ Build ]
+            - Deploy_AWS_Kube:
+                requires: [ Build_Docker_Image ]
