@@ -113,7 +113,6 @@ jobs:
             - run:
                 name: Deploy onto Kube cluster
                 command: |
-                    kubectl proxy --port=8080
                     #kubectl --kubeconfig /home/circleci/.kube/config get nodes
                     kubectl get nodes
                     # Deploy an App from the Dockerhub to the Kubernetes Cluster
