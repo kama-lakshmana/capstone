@@ -42,8 +42,8 @@ jobs:
                     make lint
 
     build-and-publish-docker-image:
-      - docker/publish:
-          image: kamalakshmana/capstone
+            - docker/publish:
+                image: kamalakshmana/capstone
 
     Build_Docker_Image:
         docker:
