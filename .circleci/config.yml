@@ -14,21 +14,18 @@ jobs:
 
         steps:
             - checkout
-
             # Download and cache dependencies
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ checksum "requirements.txt" }}
                     # fallback to using the latest cache if no exact match is found
                     - v1-dependencies-
-
             - run:
                 name: install dependencies
                 command: |
                     python3 -m venv capstone
                     . capstone/bin/activate
                     make install
-
             - save_cache:
                 paths:
                     - ./capstone
@@ -50,20 +47,20 @@ jobs:
                 password: $DOCKER_PASS
         steps:
             - checkout
-            
             - setup_remote_docker:
                 version: 20.10.14
-            
             - run:
                 name: Build and run docker image
                 command: |
+                    #ensure docker is running
+                    docker --version
                     #build docker image
                     docker build . --tag capstone
                     #list docker images
                     docker images capstone
-                    #run the docker
+                    #run the container
                     docker run -p 80:5000 capstone
-
+                    docker ps
             - run:
                 name: Push docker image to Hub
                 command: |        
@@ -85,12 +82,6 @@ jobs:
             - run:
                 name: Install Dependencies for Kube configuration
                 command: |
-                    # # install sudo package 
-                    # apt-get -y -qq update
-                    # apt-get -y install sudo
-                    # # extras for below installs
-                    # sudo apt-get -y install curl gnupg2 software-properties-common unzip less git dos2unix
-                    
                     sudo apt-get update && sudo apt-get upgrade
 
                     # install AWS CLI at latest version
@@ -131,11 +122,20 @@ jobs:
             #         kubectl get services
             #         kubectl rollout restart deployment/capstone-amazinggames
             #         kubectl describe svc capstone-amazinggames
+            # Assuming the Kubernetes cluster is ready
+            # kubectl get nodes
+            # # Deploy an App from the Dockerhub to the Kubernetes Cluster
+            # kubectl create deploy python-helloworld --image=sudkul/python-helloworld:v1.0.0
+            # # See the status
+            # kubectl get deploy,rs,svc,pods
+            # # Port forward 
+            # kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 5000:5000
+
 
 workflows:
     default:
         jobs:
-            #- build
-            #- build_docker_image:
-                #requires: [ build ]
-            - Deploy_AWS_Kube
+            - build
+            - build_docker_image:
+                requires: [ build ]
+            #- Deploy_AWS_Kube
