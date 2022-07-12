@@ -113,11 +113,14 @@ jobs:
             - run:
                 name: Deploy onto Kube cluster
                 command: |
-                    kubectl --kubeconfig /home/circleci/.kube/config get nodes
+                    kubectl proxy --port=8080
+                    #kubectl --kubeconfig /home/circleci/.kube/config get nodes
+                    kubectl get nodes
                     # Deploy an App from the Dockerhub to the Kubernetes Cluster
                     kubectl create deploy capstone --image=kamalakshmana/capstone:latest
                     # See the status
-                    kubectl --kubeconfig /home/circleci/.kube/config get deploy,rs,svc,pods
+                    #kubectl --kubeconfig /home/circleci/.kube/config get deploy,rs,svc,pods
+                    kubectl get deploy,rs,svc,pods
 
 workflows:
     default:
