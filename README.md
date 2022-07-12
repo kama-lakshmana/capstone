@@ -3,6 +3,7 @@ CAPSTONE
 Description:The project deploys an image to Kube Cluster
 
 Technologies Used:
+
 Docker
 
 Kubernetes

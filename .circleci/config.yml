@@ -4,6 +4,9 @@
 #
 version: 2.1
 
+orbs:
+  docker: circleci/docker@2.1.2
+
 jobs:
     Build:
         docker:
@@ -37,6 +40,10 @@ jobs:
                 command: |
                     . capstone/bin/activate
                     make lint
+
+    build-and-publish-docker-image:
+      - docker/publish:
+          image: kamalakshmana/capstone
 
     Build_Docker_Image:
         docker:
@@ -121,7 +128,9 @@ workflows:
     default:
         jobs:
             - build
-            - build_docker_image:
+            - build-and-publish-docker-image:
                 requires: [ build ]
-            - Deploy_AWS_Kube:
-                requires: [ build_docker_image ]
+            #- build_docker_image:
+                #requires: [ build ]
+            #- Deploy_AWS_Kube:
+                #requires: [ build_docker_image ]
