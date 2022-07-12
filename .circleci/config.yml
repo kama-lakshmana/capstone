@@ -123,8 +123,8 @@ jobs:
 workflows:
     default:
         jobs:
-            - build
-            # - build_docker_image:
+            - Build
+            # - Build_Docker_Image:
             #     requires: [ build ]
             # - Deploy_AWS_Kube:
             #     requires: [ build_docker_image ]
