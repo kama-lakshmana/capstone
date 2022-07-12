@@ -129,4 +129,4 @@ workflows:
             # - Deploy_AWS_Kube:
             #     requires: [ build_docker_image ]
             - docker/publish:
-                image: kamalakshmana/capstone
+                image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
