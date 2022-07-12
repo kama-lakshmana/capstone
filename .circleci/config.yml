@@ -41,9 +41,11 @@ jobs:
                     . capstone/bin/activate
                     make lint
 
-    build-and-publish-docker-image:
-            - docker/publish:
-                image: kamalakshmana/capstone
+workflows:
+  build-and-publish-docker-image:
+    jobs:
+      - docker/publish:
+            image: kamalakshmana/capstone
 
     Build_Docker_Image:
         docker:
