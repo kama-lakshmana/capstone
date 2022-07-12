@@ -41,12 +41,6 @@ jobs:
                     . capstone/bin/activate
                     make lint
 
-workflows:
-  build-and-publish-docker-image:
-    jobs:
-      - docker/publish:
-            image: kamalakshmana/capstone
-
     Build_Docker_Image:
         docker:
             # Use the same Docker base as the project
@@ -130,9 +124,9 @@ workflows:
     default:
         jobs:
             - build
-            - build-and-publish-docker-image:
-                requires: [ build ]
-            #- build_docker_image:
-                #requires: [ build ]
-            #- Deploy_AWS_Kube:
-                #requires: [ build_docker_image ]
+            # - build_docker_image:
+            #     requires: [ build ]
+            # - Deploy_AWS_Kube:
+            #     requires: [ build_docker_image ]
+            - docker/publish:
+                image: kamalakshmana/capstone
